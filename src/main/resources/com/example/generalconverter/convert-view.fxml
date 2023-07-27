@@ -12,7 +12,7 @@
    <TextField fx:id="finalUnitField" editable="false" layoutX="182.0" layoutY="142.0" prefHeight="25.0" prefWidth="149.0" />
    <Button fx:id="convertButton" layoutX="363.0" layoutY="79.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="101.0" text="Covert" />
    <TextField fx:id="searchStartUnitField" layoutX="56.0" layoutY="33.0" prefHeight="25.0" prefWidth="101.0" />
-   <Label fx:id="searchStartLabel" layoutX="31.0" layoutY="33.0" text="🔍">
+   <Label layoutX="31.0" layoutY="33.0" onMouseClicked="#handleStartSearch" text="🔍">
       <font>
          <Font size="17.0" />
       </font>
@@ -22,13 +22,7 @@
          <Font size="36.0" />
       </font>
    </Label>
-   <ComboBox fx:id="startUnitBox" layoutX="31.0" layoutY="69.0" prefHeight="25.0" prefWidth="125.0" promptText="Unit1" />
-   <Label fx:id="searchFianlLabel" layoutX="32.0" layoutY="142.0" text="🔍">
-      <font>
-         <Font size="17.0" />
-      </font>
-   </Label>
-   <TextField fx:id="searchFinalUnitField" layoutX="57.0" layoutY="142.0" prefHeight="25.0" prefWidth="101.0" />
-   <ComboBox fx:id="finalUnitBox" layoutX="32.0" layoutY="173.0" prefHeight="25.0" prefWidth="125.0" promptText="Unit2" />
+   <ComboBox fx:id="startUnitBox" layoutX="31.0" layoutY="69.0" onAction="#handleStartBox" prefHeight="25.0" prefWidth="125.0" promptText="Unit1" />
+   <ComboBox fx:id="finalUnitBox" layoutX="31.0" layoutY="142.0" prefHeight="25.0" prefWidth="125.0" promptText="Unit2" />
    <Button fx:id="aboutButton" layoutX="414.0" layoutY="186.0" mnemonicParsing="false" text="About" />
 </AnchorPane>
