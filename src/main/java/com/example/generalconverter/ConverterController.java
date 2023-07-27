@@ -61,6 +61,19 @@ public class ConverterController {
         }
     }
     @FXML public void handleConvert() {
+        String startUnit = startUnitBox.getValue();
+        String endUnit = finalUnitBox.getValue();
+        double startValue = Double.valueOf(startUnitField.getCharacters().toString());
 
+        System.out.println(startUnit);
+        if(startUnit == null || endUnit == null) {
+            Alert noUnitSelected = new Alert(Alert.AlertType.ERROR);
+            noUnitSelected.setTitle("None unit selected");
+            noUnitSelected.setHeaderText("You haven't selected the start or the final unit");
+            noUnitSelected.setContentText("Please, select both and then try the conversion");
+            noUnitSelected.showAndWait();
+        }
+
+        finalUnitField.setText("Result");
     }
 }

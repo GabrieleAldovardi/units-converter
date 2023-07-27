@@ -7,22 +7,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="225.0" prefWidth="494.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.generalconverter.ConverterController">
-   <TextField fx:id="startUnitField" layoutX="182.0" layoutY="33.0" />
+<AnchorPane prefHeight="225.0" prefWidth="474.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.generalconverter.ConverterController">
+   <TextField fx:id="startUnitField" layoutX="181.0" layoutY="69.0" text="0.0" />
    <TextField fx:id="finalUnitField" editable="false" layoutX="182.0" layoutY="142.0" prefHeight="25.0" prefWidth="149.0" />
-   <Button fx:id="convertButton" layoutX="363.0" layoutY="79.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="101.0" text="Covert" />
+   <Button fx:id="convertButton" layoutX="346.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleConvert" prefHeight="31.0" prefWidth="101.0" text="Covert" />
    <TextField fx:id="searchStartUnitField" layoutX="56.0" layoutY="33.0" prefHeight="25.0" prefWidth="101.0" />
    <Label layoutX="31.0" layoutY="33.0" onMouseClicked="#handleStartSearch" text="🔍">
       <font>
          <Font size="17.0" />
       </font>
    </Label>
-   <Label layoutX="239.0" layoutY="74.0" text="⇓">
+   <Label layoutX="247.0" layoutY="91.0" text="⇓">
       <font>
          <Font size="36.0" />
       </font>
    </Label>
-   <ComboBox fx:id="startUnitBox" layoutX="31.0" layoutY="69.0" onAction="#handleStartBox" prefHeight="25.0" prefWidth="125.0" promptText="Unit1" />
-   <ComboBox fx:id="finalUnitBox" layoutX="31.0" layoutY="142.0" prefHeight="25.0" prefWidth="125.0" promptText="Unit2" />
-   <Button fx:id="aboutButton" layoutX="414.0" layoutY="186.0" mnemonicParsing="false" text="About" />
+   <ComboBox fx:id="startUnitBox" layoutX="31.0" layoutY="69.0" onAction="#handleStartBox" prefHeight="25.0" prefWidth="125.0" promptText="Initial unit" />
+   <ComboBox fx:id="finalUnitBox" layoutX="31.0" layoutY="142.0" prefHeight="25.0" prefWidth="125.0" promptText="Final unit" />
+   <Button fx:id="aboutButton" layoutX="397.0" layoutY="185.0" mnemonicParsing="false" text="About" />
 </AnchorPane>
