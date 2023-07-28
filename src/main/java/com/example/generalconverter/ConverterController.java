@@ -65,7 +65,6 @@ public class ConverterController {
         String endUnit = finalUnitBox.getValue();
         double startValue = Double.valueOf(startUnitField.getCharacters().toString());
 
-        System.out.println(startUnit);
         if(startUnit == null || endUnit == null) {
             Alert noUnitSelected = new Alert(Alert.AlertType.ERROR);
             noUnitSelected.setTitle("None unit selected");
