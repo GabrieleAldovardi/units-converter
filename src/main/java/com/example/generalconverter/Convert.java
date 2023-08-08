@@ -10,7 +10,7 @@ import java.util.*;
  * @author Gabriele Aldovardi
  */
 public class Convert {
-    private final int FAHRENHEIT_CONVERSION_CONSTANT = 32;
+    private final double FAHRENHEIT_CONVERSION_CONSTANT = 1.8;
     Map<String, Double> conversionTable;
     List<String> basicUnit;
 
@@ -34,7 +34,7 @@ public class Convert {
      */
     public void createConversionTable(Map<String, Double> conversionTable) {
         //temperatures
-        conversionTable.put("Fahrenheit", 1.8);
+        conversionTable.put("Fahrenheit", 32.0);
         conversionTable.put("Kelvin", 273.15);
 
         //degrees
@@ -65,24 +65,50 @@ public class Convert {
      * @return the value associated to the new unit
      */
     Optional<Double> convertUnit(Optional<String> start, Optional<String> end, Optional<Double> value) {
-        Optional<Double> finalValue = null;
-        if (basicUnit.contains(start.get())) {
-            finalValue = fromBasicUnit(end, value);
-        } else if (basicUnit.contains(end.get())) {
-            finalValue = toBasicUnit(start, value);
-        } else {
-            finalValue = toBasicUnit(start, value);
-            finalValue = fromBasicUnit(end, finalValue);
+        Optional<Double> finalValue = value;
+        if (!start.equals(end)) {
+            if (basicUnit.contains(start.get())) {
+                finalValue = fromBasicUnit(end, value);
+            } else if (basicUnit.contains(end.get())) {
+                finalValue = toBasicUnit(start, value);
+            } else {
+                finalValue = toBasicUnit(start, value);
+                finalValue = fromBasicUnit(end, finalValue);
+            }
         }
-
         return finalValue;
     }
 
-    private Optional<Double> toBasicUnit(Optional<String> start, Optional<Double> value) {
-        return null;
+    /**
+     * Convert the start basic unit value in the corresponding final unit value
+     */
+    private Optional<Double> fromBasicUnit(Optional<String> end, Optional<Double> value) {
+        double newValue = value.get();
+        if (Unit.temperatures.contains(end.get())) {
+            if (end.get().equals("Fahrenheit"))
+                newValue *= FAHRENHEIT_CONVERSION_CONSTANT;
+
+            newValue += conversionTable.get(end.get());
+        } else {
+            newValue /= conversionTable.get(end.get());
+        }
+        return Optional.of(newValue);
     }
 
-    private Optional<Double> fromBasicUnit(Optional<String> end, Optional<Double> value) {
-        return null;
+    /**
+     * Convert the start unit value in the corresponding basic unit value
+     * of the related group
+     */
+    private Optional<Double> toBasicUnit(Optional<String> start, Optional<Double> value) {
+        double newValue = value.get();
+        if (Unit.temperatures.contains(start.get())) {
+            newValue -= conversionTable.get(start.get());
+
+            if (start.get().equals("Fahrenheit"))
+                newValue /= FAHRENHEIT_CONVERSION_CONSTANT;
+        } else {
+            newValue *= conversionTable.get(start.get());
+        }
+        return Optional.of(newValue);
     }
 }
