@@ -2,7 +2,14 @@ package com.example.generalconverter;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,8 +30,7 @@ public class ConverterController {
      */
     @FXML
     public void initialize() {
-        List<String> units =
-                new ArrayList<>(Unit.allUnits.stream().flatMap(Collection::stream).collect(Collectors.toList()));
+        List<String> units = new ArrayList<>(Unit.allUnits.stream().flatMap(Collection::stream).collect(Collectors.toList()));
         startUnitBox.getItems().addAll(units);
         startUnitBox.setVisibleRowCount(10);
         convert = new Convert();
@@ -41,7 +47,7 @@ public class ConverterController {
             if (Unit.allUnits.get(index).contains(startUnitBox.getValue()))
                 break;
 
-        if(!Unit.allUnits.get(index).contains(finalUnitBox.getValue())) {
+        if (!Unit.allUnits.get(index).contains(finalUnitBox.getValue())) {
             finalUnitBox.getItems().clear();
             finalUnitBox.getItems().addAll(Unit.allUnits.get(index));
             finalUnitBox.setVisibleRowCount(5);
@@ -93,6 +99,41 @@ public class ConverterController {
             noValueInserted.setHeaderText("You haven't selected a value for the start unit");
             noValueInserted.setContentText("Please, insert one and then try again");
             noValueInserted.showAndWait();
+        }
+    }
+
+    /**
+     * Shows some information about the author
+     */
+    @FXML
+    public void handleAbout() {
+        Hyperlink linkGA = new Hyperlink("https://github.com/GabrieleAldovardi");
+        linkGA.setOnAction(e -> openWebPage("https://github.com/GabrieleAldovardi"));
+
+        VBox vbox = new VBox();
+        Label description = new Label("Here you can find more details:");
+        vbox.getChildren().addAll(description, linkGA);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("About me");
+        alert.setHeaderText("Hi, i'm a Computer Engineering student at UNIMORE, University of Modena and Reggio Emilia");
+        alert.getDialogPane().setContent(vbox);
+        alert.showAndWait();
+    }
+
+    /**
+     * Create a clickable link for a browser
+     *
+     * @param url is the string that represent the URL of the internet page
+     */
+    private void openWebPage(String url) {
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.browse(new URI(url));
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

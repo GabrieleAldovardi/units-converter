@@ -38,6 +38,8 @@ public class Convert {
         conversionTable.put("Kelvin", 273.15);
 
         //degrees
+        conversionTable.put("Radians", Math.PI / 180);
+        conversionTable.put("Gradient", 200.0 / 180);
 
         //distances
         conversionTable.put("Kilometer", 1000.0);
@@ -46,13 +48,79 @@ public class Convert {
         conversionTable.put("Millimeter", 0.001);
         conversionTable.put("Micrometer", 0.000001);
         conversionTable.put("Nanometer", 0.000000001);
+        conversionTable.put("Inch", 0.0254);
         conversionTable.put("Feet", 0.3048);
         conversionTable.put("Yard", 0.9144);
-        conversionTable.put("Inch", 0.0254);
         conversionTable.put("Mile", 1609.344);
         conversionTable.put("Light year", 9.454254955488e15);
 
         //weights
+        conversionTable.put("Ton", 1000000.0);
+        conversionTable.put("Kilogram", 1000.0);
+        conversionTable.put("Hectogram", 100.0);
+        conversionTable.put("Centigram", 0.01);
+        conversionTable.put("Milligram", 0.001);
+        conversionTable.put("Ounce", 28.34952);
+        conversionTable.put("Pound", 453.5924);
+
+        //volumes
+        conversionTable.put("Kilolitre", 1000.0);
+        conversionTable.put("Decilitre", 0.1);
+        conversionTable.put("Centilitre", 0.01);
+        conversionTable.put("Millilitre", 0.001);
+        conversionTable.put("Gallon", 3.785412);
+        conversionTable.put("Pint", 0.473176);
+        conversionTable.put("Fluid Ounce", 0.0295735);
+        conversionTable.put("Cubic decimeter", 1.0);
+        conversionTable.put("Cubic centimeter", 0.001);
+        conversionTable.put("Cubic milliliter", 0.000001);
+
+        //times
+        conversionTable.put("Nanosecond", 1e-9);
+        conversionTable.put("Microsecond", 1e-6);
+        conversionTable.put("Millisecond", 0.001);
+        conversionTable.put("Minute", 60.0);
+        conversionTable.put("Hour", 3600.0);
+        conversionTable.put("Day", 86400.0);
+        conversionTable.put("Week", 604800.0);
+        conversionTable.put("Month", 2629440.0); // Approximate value for average month (30.43333333 days)
+        conversionTable.put("Year", 31553280.0); // Approximate value for average year (365.2 days)
+
+        //velocity
+        conversionTable.put("Kilometer per second", 1000.0);
+        conversionTable.put("Kilometer per hour", 0.277778);
+        conversionTable.put("Meter per hour", 0.000277778);
+        conversionTable.put("Miles per second", 1609.34);
+        conversionTable.put("Miles per hour", 0.44704);
+        conversionTable.put("Light speed", 299792458.0);
+        conversionTable.put("Sound speed", 343.0);
+
+        //currency --> dated to 08/08/2023 20:40:51
+        conversionTable.put("Argentinian Pesos", 0.01022);
+        conversionTable.put("Dirham", 0.22727);
+        conversionTable.put("Indian Rupee", 0.01164);
+        conversionTable.put("Naira", 0.00228);
+        conversionTable.put("Pound", 1.1660);
+        conversionTable.put("US dollar", 0.85175);
+        conversionTable.put("Won", 0.00084);
+        conversionTable.put("Yen", 0.00812);
+        conversionTable.put("Yuan", 0.15310);
+
+        //data
+        conversionTable.put("Byte", 8.0);
+        conversionTable.put("Kilobit", 1024.0);
+        conversionTable.put("Kilobyte", 8192.0);
+        conversionTable.put("Megabit", 1048576.0);
+        conversionTable.put("Megabyte", 8388608.0);
+        conversionTable.put("Gigabit", 1073741824.0);
+        conversionTable.put("Gigabyte", 8589934592.0);
+        conversionTable.put("Terabit", 1099511627776.0);
+        conversionTable.put("Terabyte", 8796093022208.0);
+        conversionTable.put("Petabit", 1125899906842624.0);
+        conversionTable.put("Petabyte", 9007199254740992.0);
+        conversionTable.put("Exabit", 1152921504606846976.0);
+        conversionTable.put("Exabyte", 9223372036854775808.0);
+
     }
 
     /**
