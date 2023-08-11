@@ -3,26 +3,44 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="225.0" prefWidth="474.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.generalconverter.ConverterController">
-   <TextField fx:id="startUnitField" layoutX="181.0" layoutY="69.0" text="0.0" />
-   <TextField fx:id="finalUnitField" editable="false" layoutX="182.0" layoutY="142.0" prefHeight="25.0" prefWidth="149.0" />
-   <Button fx:id="convertButton" layoutX="346.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleConvert" prefHeight="31.0" prefWidth="101.0" text="Covert" />
-   <TextField fx:id="searchStartUnitField" layoutX="56.0" layoutY="33.0" prefHeight="25.0" prefWidth="101.0" />
-   <Label layoutX="31.0" layoutY="33.0" onMouseClicked="#handleStartSearch" text="🔍">
+<AnchorPane fx:id="pane" minHeight="-Infinity" prefHeight="196.0" prefWidth="476.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.generalconverter.ConverterController">
+   <TextField fx:id="startUnitField" layoutX="205.0" layoutY="56.0" prefHeight="25.0" prefWidth="149.0" text="0.0" />
+   <TextField fx:id="finalUnitField" editable="false" layoutX="206.0" layoutY="129.0" prefHeight="25.0" prefWidth="149.0" />
+   <ComboBox fx:id="startUnitBox" layoutX="55.0" layoutY="56.0" prefHeight="25.0" prefWidth="125.0" promptText="Initial unit" />
+   <ComboBox fx:id="finalUnitBox" layoutX="55.0" layoutY="129.0" prefHeight="25.0" prefWidth="125.0" promptText="Final unit" />
+   <ImageView fx:id="swapIcon" fitHeight="42.0" fitWidth="32.0" layoutX="102.0" layoutY="89.0" onMouseEntered="#mouseOnIcon" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@icons/sort.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="swapGif" fitHeight="42.0" fitWidth="32.0" layoutX="102.0" layoutY="89.0" onMouseClicked="#handleSwap" onMouseExited="#mouseOnIcon" pickOnBounds="true" preserveRatio="true" visible="false">
+      <image>
+         <Image url="@icons/sort.gif" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="menuIcon" fitHeight="32.0" fitWidth="49.0" layoutX="14.0" layoutY="12.0" onMouseClicked="#handleOpenMenu" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@icons/menu-burger.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="closeIcon" fitHeight="32.0" fitWidth="49.0" layoutX="428.0" layoutY="12.0" onMouseClicked="#handleCloseMenu" pickOnBounds="true" preserveRatio="true" visible="false">
+      <image>
+         <Image url="@icons/close.png" />
+      </image>
+   </ImageView>
+   <Label fx:id="unitsLabel" layoutX="57.0" layoutY="20.0" prefHeight="25.0" prefWidth="125.0">
       <font>
-         <Font size="17.0" />
+         <Font name="System Bold" size="15.0" />
       </font>
    </Label>
-   <Label layoutX="247.0" layoutY="91.0" text="⇓">
-      <font>
-         <Font size="36.0" />
-      </font>
-   </Label>
-   <ComboBox fx:id="startUnitBox" layoutX="31.0" layoutY="69.0" onAction="#handleStartBox" prefHeight="25.0" prefWidth="125.0" promptText="Initial unit" />
-   <ComboBox fx:id="finalUnitBox" layoutX="31.0" layoutY="142.0" prefHeight="25.0" prefWidth="125.0" promptText="Final unit" />
-   <Button fx:id="aboutButton" layoutX="397.0" layoutY="185.0" mnemonicParsing="false" onAction="#handleAbout" text="About" />
+   <TableView fx:id="unitsTable" prefHeight="202.0" prefWidth="141.0" visible="false" />
+   <Button fx:id="aboutButton" layoutX="411.0" layoutY="154.0" mnemonicParsing="false" onAction="#handleAbout" text="About" />
+   <Button fx:id="convertButton" layoutX="360.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleConvert" prefHeight="31.0" prefWidth="101.0" text="Covert" />
 </AnchorPane>

@@ -2,6 +2,7 @@ package com.example.generalconverter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Contains all the units used for this app
@@ -16,5 +17,5 @@ public class Unit {
     static final List<String> velocity = Arrays.asList("Kilometer per second", "Kilometer per hour", "Meter per second", "Meter per hour", "Miles per second", "Miles per hour", "Light speed", "Sound speed");
     static final List<String> currency = Arrays.asList("Argentinian-Pesos", "Dirham", "Euro", "Indian-Rupee", "Naira", "Pound", "US-dollar", "Won", "Yen", "Yuan");
     static final List<String> data = Arrays.asList("Bit", "Byte", "Kilobit", "Kilobyte", "Megabit", "Megabyte", "Gigabit", "Gigabyte", "Terabit", "Terabyte", "Petabit", "Petabyte", "Exabit", "Exabyte");
-    static final List<List<String>> allUnits = List.of(temperatures, angles, distances, weights, volumes, times, velocity, currency, data);
+    static final Map<String, List<String>> unitGroups = Map.of("Temperatures", temperatures, "Angles", angles, "Distances", distances, "Weights", weights, "Volumes", volumes, "Times", times, "Velocity", velocity, "Currency", currency, "Data", data);
 }

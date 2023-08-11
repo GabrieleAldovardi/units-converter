@@ -1,9 +1,12 @@
 package com.example.generalconverter;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.awt.Desktop;
@@ -11,64 +14,120 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Contain the method that controls the UI of the application
  */
 public class ConverterController {
     @FXML
-    private TextField startUnitField, finalUnitField, searchStartUnitField;
+    private AnchorPane pane;
+    @FXML
+    private TextField startUnitField, finalUnitField;
     @FXML
     private ComboBox<String> startUnitBox, finalUnitBox;
+    @FXML
+    private Button convertButton, aboutButton;
+    @FXML
+    private ImageView swapGif, swapIcon, closeIcon;
+    @FXML
+    private TableView<Map.Entry<String, List<String>>> unitsTable;
+    @FXML
+    private Label unitsLabel;
 
     private Convert convert;
 
     /**
-     * Creates the initial view of the application and creates the data
+     * Creates the initial view of the application, the data
      * structures that will contain the information for the app
+     * and the structure of the menu
      */
     @FXML
     public void initialize() {
-        List<String> units = new ArrayList<>(Unit.allUnits.stream().flatMap(Collection::stream).collect(Collectors.toList()));
-        startUnitBox.getItems().addAll(units);
+        pane.setStyle("-fx-background-color: white");
+        startUnitBox.getItems().addAll(Unit.distances);
         startUnitBox.setVisibleRowCount(10);
+        finalUnitBox.getItems().addAll(Unit.distances);
+        finalUnitBox.setVisibleRowCount(10);
+        unitsLabel.setText("Distances");
         convert = new Convert();
+        constructMenu();
     }
 
     /**
-     * Modify the final unit box with only the units that are from the
-     * same group as the initial selected, without the item itself
+     * Build the inside structure of the menu button
      */
-    @FXML
-    public void handleStartBox() {
-        int index;
-        for (index = 0; index < Unit.allUnits.size(); index++)
-            if (Unit.allUnits.get(index).contains(startUnitBox.getValue()))
-                break;
+    private void constructMenu() {
+        TableColumn<Map.Entry<String, List<String>>, String> column = new TableColumn<>("Groups of units");
+        column.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getKey()));
+        unitsTable.getColumns().add(column);
 
-        if (!Unit.allUnits.get(index).contains(finalUnitBox.getValue())) {
+        ObservableList<Map.Entry<String, List<String>>> values = FXCollections.observableArrayList(Unit.unitGroups.entrySet());
+        values.sort(Map.Entry.comparingByKey());
+        unitsTable.setItems(values);
+        unitsTable.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            String selectedGroup = values.get(newValue.intValue()).getKey();
+            unitsLabel.setText(selectedGroup);
+            startUnitBox.getItems().clear();
+            startUnitBox.getItems().addAll(Unit.unitGroups.get(selectedGroup));
             finalUnitBox.getItems().clear();
-            finalUnitBox.getItems().addAll(Unit.allUnits.get(index));
-            finalUnitBox.setVisibleRowCount(5);
-        }
+            finalUnitBox.getItems().addAll(Unit.unitGroups.get(selectedGroup));
+        });
+
+        unitsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     /**
-     * Allow the user to search through the list of all the
-     * units with a search bar
+     * Swap the animation and the static image based on
+     * the current position of the mouse
      */
     @FXML
-    public void handleStartSearch() {
-        if (startUnitBox.getItems().contains(searchStartUnitField.getCharacters().toString())) {
-            startUnitBox.setValue(searchStartUnitField.getCharacters().toString());
-            searchStartUnitField.clear();
-        } else {
-            Alert wrongUnit = new Alert(Alert.AlertType.ERROR);
-            wrongUnit.setTitle("Error");
-            wrongUnit.setHeaderText("Wrong unit typed");
-            wrongUnit.show();
-        }
+    public void mouseOnIcon() {
+        swapIcon.setVisible(!swapIcon.isVisible());
+        swapGif.setVisible(!swapGif.isVisible());
+    }
+
+    /**
+     * Swap the selected units
+     */
+    @FXML
+    public void handleSwap() {
+        String tmp = startUnitBox.getValue();
+        startUnitBox.setValue(finalUnitBox.getValue());
+        finalUnitBox.setValue(tmp);
+    }
+
+    /**
+     * Open the menu represented by the table view
+     */
+    @FXML
+    public void handleOpenMenu() {
+        pane.setStyle("-fx-background-color: grey");
+        setAll(true);
+    }
+
+    /**
+     * Close the menu represented by the table view
+     */
+    @FXML
+    public void handleCloseMenu() {
+        pane.setStyle("-fx-background-color: white");
+        setAll(false);
+    }
+
+    /**
+     * Able/Disable all the nodes when the menu
+     * is closed/opened
+     */
+    private void setAll(boolean value) {
+        unitsTable.setVisible(value);
+        closeIcon.setVisible(value);
+        startUnitBox.setDisable(value);
+        startUnitField.setDisable(value);
+        finalUnitBox.setDisable(value);
+        finalUnitField.setDisable(value);
+        convertButton.setDisable(value);
+        aboutButton.setDisable(value);
+        swapIcon.setDisable(value);
     }
 
     /**
@@ -81,12 +140,8 @@ public class ConverterController {
             Optional<String> endUnit = finalUnitBox.getValue().describeConstable();
             Optional<Double> startValue = Double.valueOf(startUnitField.getCharacters().toString()).describeConstable();
 
-            if (startUnit.isEmpty() || endUnit.isEmpty()) {
-                throw new NullPointerException();
-            }
-
-            Optional<Double> endValue = convert.convertUnit(startUnit, endUnit, startValue);
-            finalUnitField.setText(Double.toString(endValue.get()));
+            double endValue = convert.convertUnit(startUnit.orElseThrow(NullPointerException::new), endUnit.orElseThrow(NullPointerException::new), startValue.orElseThrow(NumberFormatException::new));
+            finalUnitField.setText(Double.toString(endValue));
         } catch (NullPointerException np) {
             Alert noUnitSelected = new Alert(Alert.AlertType.ERROR);
             noUnitSelected.setTitle("None unit selected");
@@ -95,9 +150,9 @@ public class ConverterController {
             noUnitSelected.showAndWait();
         } catch (NumberFormatException nf) {
             Alert noValueInserted = new Alert(Alert.AlertType.ERROR);
-            noValueInserted.setTitle("None value inserted");
-            noValueInserted.setHeaderText("You haven't selected a value for the start unit");
-            noValueInserted.setContentText("Please, insert one and then try again");
+            noValueInserted.setTitle("Wrong value inserted");
+            noValueInserted.setHeaderText("You have selected a non valid value for the start unit");
+            noValueInserted.setContentText("Please, insert only numbers and then try again");
             noValueInserted.showAndWait();
         }
     }
@@ -108,7 +163,7 @@ public class ConverterController {
     @FXML
     public void handleAbout() {
         Hyperlink linkGA = new Hyperlink("https://github.com/GabrieleAldovardi");
-        linkGA.setOnAction(e -> openWebPage("https://github.com/GabrieleAldovardi"));
+        linkGA.setOnAction(e -> openWebPage());
 
         VBox vbox = new VBox();
         Label description = new Label("Here you can find more details:");
@@ -123,14 +178,12 @@ public class ConverterController {
 
     /**
      * Create a clickable link for a browser
-     *
-     * @param url is the string that represent the URL of the internet page
      */
-    private void openWebPage(String url) {
+    private void openWebPage() {
         if (Desktop.isDesktopSupported()) {
             Desktop desktop = Desktop.getDesktop();
             try {
-                desktop.browse(new URI(url));
+                desktop.browse(new URI("https://github.com/GabrieleAldovardi"));
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
             }

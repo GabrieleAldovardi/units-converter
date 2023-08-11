@@ -97,14 +97,14 @@ public class Convert {
 
         //currency --> dated to 08/08/2023 20:40:51
         conversionTable.put("Argentinian Pesos", 0.01022);
-        conversionTable.put("Dirham", 0.22727);
+        conversionTable.put("UAE Dirham", 0.22727);
         conversionTable.put("Indian Rupee", 0.01164);
-        conversionTable.put("Naira", 0.00228);
-        conversionTable.put("Pound", 1.1660);
-        conversionTable.put("US dollar", 0.85175);
-        conversionTable.put("Won", 0.00084);
-        conversionTable.put("Yen", 0.00812);
-        conversionTable.put("Yuan", 0.15310);
+        conversionTable.put("Nigeria Naira", 0.00228);
+        conversionTable.put("England Pound", 1.1660);
+        conversionTable.put("USA dollar", 0.85175);
+        conversionTable.put("Chinese Won", 0.00084);
+        conversionTable.put("Japanese Yen", 0.00812);
+        conversionTable.put("Korean Yuan", 0.15310);
 
         //data
         conversionTable.put("Byte", 8.0);
@@ -120,7 +120,6 @@ public class Convert {
         conversionTable.put("Petabyte", 9007199254740992.0);
         conversionTable.put("Exabit", 1152921504606846976.0);
         conversionTable.put("Exabyte", 9223372036854775808.0);
-
     }
 
     /**
@@ -132,12 +131,12 @@ public class Convert {
      *
      * @return the value associated to the new unit
      */
-    Optional<Double> convertUnit(Optional<String> start, Optional<String> end, Optional<Double> value) {
-        Optional<Double> finalValue = value;
+    double convertUnit(String start, String end, double value) {
+        double finalValue = value;
         if (!start.equals(end)) {
-            if (basicUnit.contains(start.get())) {
+            if (basicUnit.contains(start)) {
                 finalValue = fromBasicUnit(end, value);
-            } else if (basicUnit.contains(end.get())) {
+            } else if (basicUnit.contains(end)) {
                 finalValue = toBasicUnit(start, value);
             } else {
                 finalValue = toBasicUnit(start, value);
@@ -150,33 +149,33 @@ public class Convert {
     /**
      * Convert the start basic unit value in the corresponding final unit value
      */
-    private Optional<Double> fromBasicUnit(Optional<String> end, Optional<Double> value) {
-        double newValue = value.get();
-        if (Unit.temperatures.contains(end.get())) {
-            if (end.get().equals("Fahrenheit"))
+    private double fromBasicUnit(String end, double value) {
+        double newValue = value;
+        if (Unit.temperatures.contains(end)) {
+            if (end.equals("Fahrenheit"))
                 newValue *= FAHRENHEIT_CONVERSION_CONSTANT;
 
-            newValue += conversionTable.get(end.get());
+            newValue += conversionTable.get(end);
         } else {
-            newValue /= conversionTable.get(end.get());
+            newValue /= conversionTable.get(end);
         }
-        return Optional.of(newValue);
+        return newValue;
     }
 
     /**
      * Convert the start unit value in the corresponding basic unit value
      * of the related group
      */
-    private Optional<Double> toBasicUnit(Optional<String> start, Optional<Double> value) {
-        double newValue = value.get();
-        if (Unit.temperatures.contains(start.get())) {
-            newValue -= conversionTable.get(start.get());
+    private double toBasicUnit(String start, double value) {
+        double newValue = value;
+        if (Unit.temperatures.contains(start)) {
+            newValue -= conversionTable.get(start);
 
-            if (start.get().equals("Fahrenheit"))
+            if (start.equals("Fahrenheit"))
                 newValue /= FAHRENHEIT_CONVERSION_CONSTANT;
         } else {
-            newValue *= conversionTable.get(start.get());
+            newValue *= conversionTable.get(start);
         }
-        return Optional.of(newValue);
+        return newValue;
     }
 }
