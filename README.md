@@ -6,6 +6,8 @@ A general unit converter that, given an initial value and his unit, returns it t
 * In the initial view is possible to select both the initial and final unit from the current selected group and also insert the initial value; these are the required selections needed to convert: when everything is set just press the "Convert" button.
 * It's also possible to change the unit group: to do it click, on the menu icon that is placed in the upper-left corner and select through the list which group is needed; to close this interface simply click on the upper-right corner "X" icon.
 * Lastly, is possible to exchange the the selected unit faster by clicking on the "Swap" icon: it's the icon placed between the two units with two arrows pointing to each unit.
+## Install
+This app is accessible by cloning this repository into your IDE, the only requirement is to have a JDK version 17 or above. After doing this simply select the main method named "ConverterApplication" and run it.
 
 
 
