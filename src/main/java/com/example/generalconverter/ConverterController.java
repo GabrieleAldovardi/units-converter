@@ -27,6 +27,9 @@ public class ConverterController {
     private ComboBox<String> startUnitBox, finalUnitBox;
     @FXML
     private Button convertButton, aboutButton;
+    //FXML
+    //    private Button convertButton, aboutButton, button0, button1, button2, button3, button4, button5,
+    //            button6, button7, button8, button9, buttonDot, buttonE;
     @FXML
     private ImageView swapGif, swapIcon, closeIcon;
     @FXML
@@ -74,6 +77,11 @@ public class ConverterController {
         });
 
         unitsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        //buttonList.forEach(b -> b.setOnMouseClicked(e -> {
+        //            Button clickedButton = (Button) e.getSource();
+        //            startUnitField.setText(startUnitField.getText() + clickedButton.getText());
+        //        }));
     }
 
     /**
